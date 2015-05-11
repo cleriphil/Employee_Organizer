@@ -3,7 +3,9 @@ require('sinatra/reloader')
 require('sinatra/activerecord')
 require('./lib/department')
 require('./lib/employee')
+require('./lib/project')
 require('pg')
+require('pry')
 also_reload('lib/**/*.rb')
 
 get('/') do
@@ -77,4 +79,36 @@ patch('/departments/:id/employees/:employee_id') do
   employee = Employee.find(employee_id)
   employee.update({:first_name => first_name, :last_name => last_name})
   redirect to("/departments/#{department_id}")
+end
+
+get('/projects') do
+  @projects = Project.all
+  erb(:projects)
+end
+
+post('/projects') do
+  name = params.fetch('name')
+  Project.create({:name => name})
+  redirect to('/projects')
+end
+
+get('/projects/:id') do
+  @project = Project.find(params.fetch('id').to_i)
+  @all_employees = Employee.all.sort
+  erb(:project)
+end
+
+patch('/projects/:id/employees') do
+  project_id    = params.fetch('id').to_i
+  employee_ids  = params.fetch('employees')
+  project       = Project.find(project_id)
+
+  Employee.all.each do |employee|
+    if employee_ids.include?(employee.id.to_s)
+      employee.update({:project_id => project.id.to_i})
+    else
+      employee.update({:project_id => NIL}) #to get deselecting to work
+    end
+  end
+  redirect back
 end

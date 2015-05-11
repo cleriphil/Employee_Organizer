@@ -1,0 +1,19 @@
+<h2><%= @project.name %></h2>
+
+<form action='/projects/<%= @project.id %>/employees' method='post'>
+  <input name='_method' type='hidden' value='patch'>
+  <h4>Assign employees to this project:</h4>
+  <select multiple class='form-control' name='employees[]'>
+    <% @all_employees.each do |employee| %>
+      <option value="<%= employee.id %>"
+
+        <% if @project.id == employee.project_id %>
+          selected
+        <% end %>
+
+
+        ><%= "#{employee.first_name} #{employee.last_name}" %></option>
+    <% end %>
+  </select>
+  <button class='btn-default'>Submit</button>
+</form>
