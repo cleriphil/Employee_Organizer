@@ -1,0 +1,13 @@
+td.primary {
+  width: 70%;
+}
+
+td.secondary {
+  width: 15%;
+}
+
+.home-link {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}

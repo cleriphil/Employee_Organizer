@@ -1,1 +1,35 @@
-index!
+<h1 class="page-header text-center">Employee Tracker</h1>
+
+<div class="col-sm-6 col-sm-offset-3">
+
+  <h4>Departments</h4>
+
+  <table class="table">
+    <% @departments.each() do |department| %>
+      <tr>
+        <td class="primary">
+          <a href="/departments/<%= department.id() %>"><%= department.name() %></a>
+        </td>
+        <td class="secondary">
+          <a href="/departments/<%= department.id() %>/edit">Edit</a>
+        </td>
+        <td class="secondary">
+          <form action="/departments/<%= department.id() %>" method='post'>
+            <input name="_method" type="hidden" value="delete">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <form action="/departments" method="post">
+
+    <h4>Add new:</h4>
+
+    <div class="form-group">
+      <input type="text" name="name" id="name" class="form-control" required autofocus>
+    </div>
+    <button class="btn btn-success">Add</button>
+  </form>
+</div>

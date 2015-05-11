@@ -1,0 +1,10 @@
+<h2>Edit <%= @department.name %></h2>
+
+<form action='/departments/<%= @department.id %>' method='post'>
+  <input name='_method' type='hidden' value='patch'>
+  <div class='form-group'>
+    <label for='name'>New Name:</label>
+    <input id='name' name='name' type='text' class='form-control' value="<%= @department.name %>">
+  </div>
+  <button class='btn-default'>Submit</button>
+</form>
